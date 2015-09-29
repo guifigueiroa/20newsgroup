@@ -7,46 +7,71 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 public class WordCountTable {
-	private HashMap<String, int[]> table;
+	
+	private HashMap<String, Integer> terms;
+	private int[][] table;
 	private int documentCount;
+	private Document document;
+	
+	public WordCountTable(Document document){
+		this(1);
+		this.document = document;
+	}
+	
+	public int getDocumentId(){
+		return document.getDocumentId();
+	}
 	
 	public WordCountTable(int documentCount){
-		table = new HashMap<String, int[]>();
 		this.documentCount = documentCount;
+		this.terms = new HashMap<String, Integer>();
 	}
 	
-	public WordCountTable(){
-		this(1);
-	}
-	
-	public void addTerm(String term, int count, int documentId){
-		if(!table.containsKey(term)) {
-			table.put(term, new int[documentCount]);	
+	public void addTerm(String term){
+		if(!terms.containsKey(term)){
+			terms.put(term, terms.keySet().size());
 		}
-		//System.out.println("Sum term: " + term + " " + table.get(term)[documentId]);
-		table.get(term)[documentId] += count;
 	}
 	
-	public void removeTermsByFreq(int minFreq){
-		Iterator<Entry<String, int[]>> it = table.entrySet().iterator();
-		while(it.hasNext()) {
-			Map.Entry pair = (Map.Entry)it.next();
-		
-			if(((int[])pair.getValue())[0] < minFreq){
-				it.remove();
+	public void countTerm(String term){
+		int termId = terms.get(term);
+		table[0][termId] += 1;
+	}
+	
+	public void generateTable(){
+		table = new int[documentCount][terms.keySet().size()];
+	}
+	
+	public void setTermCount(String term, int documentId, int count) {
+		int termId = terms.get(term);
+		table[documentId][termId] = count;
+	}
+	
+	public void setTermCount(String term, int count) {
+		int termId = terms.get(term);
+		table[0][termId] = count;
+	}
+	
+	public int getTermCount(String term) {
+		int termId = terms.get(term);
+		return table[0][termId];
+	}
+	
+	public void removeTermsByFreq(int termFreq){
+		for(int i = 0; i < table[0].length; i++){
+			if(table[0][i] < 3) {
+				Iterator<Entry<String, Integer>> it = terms.entrySet().iterator();
+				while(it.hasNext()) {
+					Map.Entry pair = (Map.Entry)it.next();
+					if(((int)pair.getValue()) == i){
+						it.remove();
+					}
+				}
 			}
 		}
 	}
 	
-	public void addTerm(String term){
-		addTerm(term, 1, 0);
-	}
-	
 	public Set<String> getTerms(){
-		return table.keySet();
-	}
-	
-	public int getTermCount(String term){
-		return table.get(term)[0];
+		return terms.keySet();
 	}
 }

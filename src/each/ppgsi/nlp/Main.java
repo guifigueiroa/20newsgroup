@@ -18,13 +18,25 @@ public class Main {
 			doc.setDocumentId(i);
 			
 			PreProcessing preProc = new PreProcessing();
-			WordCountTable wc = preProc.preProcessDocument(docArray.get(i));
-			
-			System.out.println("Merging doc " + i);
-			tfidf.merge(wc, i);
+			preProc.preProcessDocument(docArray.get(i));
 		}
 		
-		System.out.println("Acabou");
+		for(Document doc : docArray){
+			System.out.println("Getting words from doc " + doc.getDocumentId());
+			for(String term : doc.getPreProcessedContent()){
+				tfidf.addTerm(term);
+			}
+		}
+		
+		tfidf.generateTable();
+		
+		for(Document doc : docArray){
+			System.out.println("Counting words from doc " + doc.getDocumentId());
+			for(String term : doc.getPreProcessedContent()){
+				tfidf.increaseTermCount(term, doc.getDocumentId());
+			}
+		}
+		System.out.println("End");
 	}
 
 	

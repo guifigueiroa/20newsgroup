@@ -5,6 +5,15 @@ public class Document {
 	private int documentId;
 	private String newsGroup;
 	private String content;
+	private String[] preProcessedContent;
+	
+	public void setPreProcessedContent(String[] preProcessedContent){
+		this.preProcessedContent = preProcessedContent;
+	}
+	
+	public String[] getPreProcessedContent(){
+		return preProcessedContent;
+	}
 	
 	public void setDocumentId(int documentId){
 		this.documentId = documentId;

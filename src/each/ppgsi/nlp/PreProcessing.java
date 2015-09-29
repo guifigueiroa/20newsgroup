@@ -6,7 +6,7 @@ public class PreProcessing {
 
 	private final int MIN_TERM_FREQ = 3;
 	
-	public WordCountTable preProcessDocument(Document document){
+	public void preProcessDocument(Document document){
 		String content = document.getContent();
 		
 		// Remove upper cases
@@ -23,15 +23,21 @@ public class PreProcessing {
 				tokenizedContent[i] = stem.getCurrent();
 		}
 		
-		// Count terms
-		WordCountTable wc = new WordCountTable();
+		document.setPreProcessedContent(tokenizedContent);
+		/*// Count terms
+		WordCountTable wc = new WordCountTable(document);
 		for(String term : tokenizedContent){
 			wc.addTerm(term);
 		}
 		
-		// Remove terms using Minimum Term Frequency
-		wc.removeTermsByFreq(MIN_TERM_FREQ);
+		wc.generateTable();
 		
-		return wc;
+		for(String term : tokenizedContent){
+			wc.countTerm(term);
+		}
+		
+		// Remove terms using Minimum Term Frequency
+		wc.removeTermsByFreq(MIN_TERM_FREQ);*/
+		
 	}
 }
