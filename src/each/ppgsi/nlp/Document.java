@@ -6,9 +6,15 @@ public class Document {
 	private String newsGroup;
 	private String content;
 	private String[] preProcessedContent;
+	private int termCount;
 	
 	public void setPreProcessedContent(String[] preProcessedContent){
 		this.preProcessedContent = preProcessedContent;
+		this.termCount = preProcessedContent.length;
+	}
+	
+	public int getTermCount(){
+		return termCount;
 	}
 	
 	public String[] getPreProcessedContent(){

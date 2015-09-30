@@ -36,6 +36,9 @@ public class Main {
 				tfidf.increaseTermCount(term, doc.getDocumentId());
 			}
 		}
+	
+		tfidf.calculateTFIDF();
+		
 		System.out.println("End");
 	}
 

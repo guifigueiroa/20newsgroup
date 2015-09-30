@@ -22,22 +22,14 @@ public class PreProcessing {
 			if(stem.stem())
 				tokenizedContent[i] = stem.getCurrent();
 		}
+
+		// Remove stop words
 		
+		// Get word count
+		
+		// Calculate TF for document
 		document.setPreProcessedContent(tokenizedContent);
-		/*// Count terms
-		WordCountTable wc = new WordCountTable(document);
-		for(String term : tokenizedContent){
-			wc.addTerm(term);
-		}
 		
-		wc.generateTable();
-		
-		for(String term : tokenizedContent){
-			wc.countTerm(term);
-		}
-		
-		// Remove terms using Minimum Term Frequency
-		wc.removeTermsByFreq(MIN_TERM_FREQ);*/
 		
 	}
 }

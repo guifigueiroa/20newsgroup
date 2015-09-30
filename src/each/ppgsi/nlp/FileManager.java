@@ -16,6 +16,7 @@ public class FileManager {
 	
 	private void readDocuments(File folder) {
 		for (File fileEntry : folder.listFiles()) {
+			//if(documents.size() > 10) break;
 			if (fileEntry.isDirectory()) {
 				readDocuments(fileEntry);
 			} else {
