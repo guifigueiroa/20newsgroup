@@ -1,40 +1,32 @@
 package each.ppgsi.nlp;
 
+import java.util.HashMap;
+
 public class Document {
 
-	private int documentId;
 	private String newsGroup;
 	private String content;
-	private String[] preProcessedContent;
-	private int termCount;
+	private HashMap<String, Integer> preProcessedContent;
+	private int wordCount;
 	
-	public void setPreProcessedContent(String[] preProcessedContent){
+	public void setPreProcessedContent(HashMap<String, Integer> preProcessedContent){
 		this.preProcessedContent = preProcessedContent;
-		this.termCount = preProcessedContent.length;
 	}
 	
-	public int getTermCount(){
-		return termCount;
-	}
-	
-	public String[] getPreProcessedContent(){
+	public HashMap<String, Integer> getPreProcessedContent(){
 		return preProcessedContent;
-	}
-	
-	public void setDocumentId(int documentId){
-		this.documentId = documentId;
 	}
 	
 	public void setNewsGroup(String newsGroup){
 		this.newsGroup = newsGroup;
 	}
 	
-	public void setContenct(String content){
-		this.content = content;
+	public void setWordCount(int wordCount){
+		this.wordCount = wordCount;
 	}
 	
-	public int getDocumentId(){
-		return documentId;
+	public void setContent(String content){
+		this.content = content;
 	}
 	
 	public String getNewsGroup(){
@@ -43,5 +35,13 @@ public class Document {
 	
 	public String getContent(){
 		return content;
+	}
+	
+	public int getWordCount(){
+		return wordCount;
+	}
+	
+	public boolean containsTerm(String term){
+		return preProcessedContent.containsKey(term);
 	}
 }

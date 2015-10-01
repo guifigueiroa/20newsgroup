@@ -5,41 +5,23 @@ import java.util.ArrayList;
 public class Main {
 
 	public static void main(String args[]) {
-		FileManager docs = new FileManager();
-		ArrayList<Document> docArray = docs.getDocuments();
+		
+		ArrayList<Document> documents = DocumentList.getInstance();
 		
 		
-		//System.out.println(docArray.get(1).getNewsGroup());
-		
-		TFIDFTable tfidf = new TFIDFTable(docArray.size());
-		
-		for(int i = 0; i < docArray.size(); i++){
-			Document doc = docArray.get(i);
-			doc.setDocumentId(i);
-			
+		for(int i = 0; i < documents.size(); i++){
+			System.out.println("Preprocessing document " + i);
 			PreProcessing preProc = new PreProcessing();
-			preProc.preProcessDocument(docArray.get(i));
+			preProc.preProcessDocument(documents.get(i));
 		}
 		
-		for(Document doc : docArray){
-			System.out.println("Getting words from doc " + doc.getDocumentId());
-			for(String term : doc.getPreProcessedContent()){
-				tfidf.addTerm(term);
-			}
-		}
+		long startTime = System.currentTimeMillis();
+
+		System.out.println("teste " + TFIDF.calculateTFIDF(documents.get(1), "atheism"));
+
+		long endTime = System.currentTimeMillis();
 		
-		tfidf.generateTable();
-		
-		for(Document doc : docArray){
-			System.out.println("Counting words from doc " + doc.getDocumentId());
-			for(String term : doc.getPreProcessedContent()){
-				tfidf.increaseTermCount(term, doc.getDocumentId());
-			}
-		}
-	
-		tfidf.calculateTFIDF();
-		
-		System.out.println("End");
+		System.out.println("That took " + (endTime - startTime) + " milliseconds");
 	}
 
 	
