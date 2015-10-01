@@ -10,7 +10,6 @@ import org.tartarus.snowball.ext.englishStemmer;
 
 public class PreProcessing {
 
-	private final int MIN_TERM_FREQ = 3;
 	private ArrayList<String> stopWords;
 	
 	public PreProcessing(){
@@ -19,7 +18,6 @@ public class PreProcessing {
 	
 	public void preProcessDocument(Document document){
 		String content = document.getContent();
-		
 		
 		// Remove upper cases
 		content = content.toLowerCase();
@@ -66,7 +64,7 @@ public class PreProcessing {
 				it.remove();
 		}*/
 		
-		document.setContent(content); // clear variable to save memory
+		document.setContent(null); // clear variable to save memory
 		document.setPreProcessedContent(documentTerms);
 		document.setWordCount(wordCount);
 		
