@@ -1,6 +1,7 @@
 package each.ppgsi.nlp;
 
 import java.util.HashMap;
+import java.util.Set;
 
 public class Document {
 
@@ -8,6 +9,10 @@ public class Document {
 	private String content;
 	private HashMap<String, Integer> preProcessedContent;
 	private int wordCount;
+	
+	public Set<String> getAllTerms(){
+		return preProcessedContent.keySet();
+	}
 	
 	public void setPreProcessedContent(HashMap<String, Integer> preProcessedContent){
 		this.preProcessedContent = preProcessedContent;
