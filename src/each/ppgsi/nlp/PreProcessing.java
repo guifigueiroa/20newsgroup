@@ -11,6 +11,8 @@ import org.tartarus.snowball.ext.englishStemmer;
 public class PreProcessing {
 
 	private ArrayList<String> stopWords;
+	private final int MIN_TF = 3;
+	
 	
 	public PreProcessing(){
 		stopWords = FileManager.getStopWords();
@@ -23,10 +25,8 @@ public class PreProcessing {
 		content = content.toLowerCase();
 		
 		// Get words without digits, punctuation
-		String[] tokenizedContent = content.split("[^a-z']+");
+		String[] tokenizedContent = content.split("[^a-z]+");
 		HashMap<String, Integer> documentTerms = new HashMap<String, Integer>();
-		
-		int wordCount = 0;
 		
 		for(int i = 0; i < tokenizedContent.length; i++){
 			
@@ -34,8 +34,6 @@ public class PreProcessing {
 			
 			// if the word is not a stop word
 			if(!isStopWord(word)) {
-				
-				wordCount++;
 				
 				// Stem the word
 				englishStemmer stem = new englishStemmer();
@@ -56,17 +54,17 @@ public class PreProcessing {
 
 		}
 		
-		// Remove less frequent words (?) Can't be here because words are used in TDF
-		/*Iterator<Map.Entry<String,Integer>> it = documentTerms.entrySet().iterator();
+		// Remove less frequent terms in document
+		Iterator<Map.Entry<String,Integer>> it = documentTerms.entrySet().iterator();
 		while(it.hasNext()){
 			Map.Entry<String, Integer> pair = it.next();
-			if(pair.getValue() < 3)
+			if(pair.getValue() < MIN_TF)
 				it.remove();
-		}*/
+		}
+		
 		
 		document.setContent(null); // clear variable to save memory
 		document.setPreProcessedContent(documentTerms);
-		document.setWordCount(wordCount);
 		
 		
 	}

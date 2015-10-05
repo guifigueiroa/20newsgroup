@@ -8,7 +8,6 @@ public class Document {
 	private String newsGroup;
 	private String content;
 	private HashMap<String, Integer> preProcessedContent;
-	private int wordCount;
 	
 	public Set<String> getAllTerms(){
 		return preProcessedContent.keySet();
@@ -26,10 +25,6 @@ public class Document {
 		this.newsGroup = newsGroup;
 	}
 	
-	public void setWordCount(int wordCount){
-		this.wordCount = wordCount;
-	}
-	
 	public void setContent(String content){
 		this.content = content;
 	}
@@ -43,7 +38,7 @@ public class Document {
 	}
 	
 	public int getWordCount(){
-		return wordCount;
+		return preProcessedContent.keySet().size();
 	}
 	
 	public boolean containsTerm(String term){

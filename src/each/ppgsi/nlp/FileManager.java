@@ -5,13 +5,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.Collections;
 
 public class FileManager {
 
@@ -21,6 +19,7 @@ public class FileManager {
 
 	private void readDocuments(File folder) {
 		for (File fileEntry : folder.listFiles()) {
+			//if(documents.size() > 50) break;
 			if (fileEntry.isDirectory() ) {
 				readDocuments(fileEntry);
 			} else if(!fileEntry.getName().startsWith(".")){
@@ -59,7 +58,9 @@ public class FileManager {
 
 	public static ArrayList<String> getStopWords() {
 		ArrayList<String> stopWords = new ArrayList<String>();
-
+		
+		stopWords.add("");
+		
 		FileReader file;
 		try {
 			file = new FileReader(STOP_WORDS);
@@ -80,7 +81,22 @@ public class FileManager {
 		} catch (IOException e) {
 			System.err.println("Erro ao ler arquivo de stop words\n" + e.getMessage());
 		}
-
+		
+		Collections.sort(stopWords);
+		
 		return stopWords;
+	}
+	
+	public static PrintWriter createOutputFile(String fileName){
+		try {
+		FileWriter writer = new FileWriter(fileName);
+		return new PrintWriter(writer); 
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 }

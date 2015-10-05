@@ -11,7 +11,8 @@ public class TFIDF {
 	}
 	
 	private static double IDF(String term) {
-		return (double) Math.log(DocumentList.getDocumentCount() / DocumentList.countDocumentsWithTerm(term));
+		DocumentList list = DocumentList.getInstance();
+		return (double) Math.log10(list.getDocumentCount() / list.getCorpusTermCount(term));
 	}
 	
 	public static double calculateTFIDF(Document doc, String term){
