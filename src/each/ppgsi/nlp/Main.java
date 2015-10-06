@@ -7,8 +7,6 @@ import java.util.SortedSet;
 
 public class Main {
 
-	
-	
 	public static void main(String args[]) {
 		// Load documents
 		ArrayList<Document> documents = DocumentList.getInstance().getDocuments();
@@ -31,18 +29,50 @@ public class Main {
 		
 		// Create output file
 		DecimalFormat df = new DecimalFormat("0.000");
-		PrintWriter output = FileManager.createOutputFile("tfidf.txt");
+		PrintWriter tfidfOut = FileManager.createOutputFile("tfidf.txt");
+		PrintWriter tfidfNormOut = FileManager.createOutputFile("tfidfNormalizado.txt");
+		
 		for(Document doc : documents){
+			double[] tfidf = new double[terms.size()];
+			int j = 0;
 			for(String term : terms){
+				
+				// calculate tf-idf for each term
 				if(doc.containsTerm(term)){
-					output.print(df.format(TFIDF.calculateTFIDF(doc, term)) + ",");
+					tfidf[j] = TFIDF.calculateTFIDF(doc, term);
 				} else {
-					output.print(0 + ",");
+					tfidf[j] = 0;
 				}
+				
+				if(tfidf[j] == 0)
+					tfidfOut.print(0 + ",");
+				else
+					tfidfOut.print(df.format(tfidf[j]) + ",");
+				
+				j++;
 			}
-			output.println();
+			
+			// Calculate division value for normalizing
+			double normalizeFactor = 0;
+			for(j = 0; j < terms.size(); j++){
+				normalizeFactor += (tfidf[j] * tfidf[j]);
+			}
+			normalizeFactor = Math.sqrt(normalizeFactor);
+			
+			// Calculate normalized tf-idf
+			for(j = 0; j < terms.size(); j++){
+				double tfidfNorm = (tfidf[j]/normalizeFactor);
+				if(tfidfNorm == 0)
+					tfidfNormOut.print(0 + ",");
+				else
+					tfidfNormOut.print(df.format(tfidfNorm) + ",");
+			}
+			
+			tfidfNormOut.println();
+			tfidfOut.println();
 		}
-		output.close();
+		tfidfOut.close();
+		tfidfNormOut.close();
 		
 		System.out.println("Qtd de termos: " + terms.size());
 	}
