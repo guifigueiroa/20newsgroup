@@ -5,7 +5,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.SortedSet;
 
-public class Main {
+public class PreProcessingMain {
 
 	private static final String outputSeparator = ",";
 	

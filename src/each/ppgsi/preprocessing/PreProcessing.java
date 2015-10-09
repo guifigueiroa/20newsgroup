@@ -24,6 +24,9 @@ public class PreProcessing {
 		// Remove upper cases
 		content = content.toLowerCase();
 		
+		// Remove apostrophes
+		content = content.replace("'", "");
+		
 		// Get words without digits, punctuation
 		String[] tokenizedContent = content.split("[^a-z]+");
 		HashMap<String, Integer> documentTerms = new HashMap<String, Integer>();
