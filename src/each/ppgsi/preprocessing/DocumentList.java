@@ -1,4 +1,4 @@
-package each.ppgsi.nlp;
+package each.ppgsi.preprocessing;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +13,7 @@ public class DocumentList {
 	private ArrayList<Document> documentList;
 	private HashMap<String, Integer> corpusTermCount;
 	private SortedSet<String> termsSet;
-	private static final int MIN_DF = 5;
+	private static final int MIN_DF = 3;
 	
 	public static DocumentList getInstance(){
 		if(instance == null) {
@@ -24,6 +24,7 @@ public class DocumentList {
 	}
 	
 	public ArrayList<Document> getDocuments(){
+		System.out.println("Loading document files");
 		if(documentList == null){
 			FileManager manager = new FileManager();
 			documentList = manager.getDocuments();
@@ -46,6 +47,7 @@ public class DocumentList {
 	}
 	
 	public SortedSet<String> getTerms(){
+		System.out.println("Creating term set from all documents");
 		termsSet = new TreeSet<String>();
 		for(Document doc : documentList) {
 			termsSet.addAll(doc.getAllTerms());
@@ -62,6 +64,8 @@ public class DocumentList {
 	}
 	
 	public void deleteLessFrequentTerms(){
+		System.out.println("Deleting not chosen terms from documents");
+		
 		for(Document doc : documentList){
 			Iterator<Map.Entry<String,Integer>> it = doc.getPreProcessedContent().entrySet().iterator();
 			while(it.hasNext()){
@@ -73,6 +77,8 @@ public class DocumentList {
 	}
 	
 	public void generateCorpusTermCountHash(){
+		System.out.println("Generating hash of term count from all documents");
+		
 		corpusTermCount = new HashMap<String, Integer>();
 		Iterator<String> it = getTerms().iterator();
 		while(it.hasNext()){
@@ -84,6 +90,6 @@ public class DocumentList {
 				it.remove(); // Remove less frequent words
 			}
 		}
-		System.out.println(corpusTermCount.size());
+		System.out.println("Terms being used: " + corpusTermCount.size());
 	}
 }

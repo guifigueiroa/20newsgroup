@@ -1,4 +1,4 @@
-package each.ppgsi.nlp;
+package each.ppgsi.preprocessing;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,7 +11,7 @@ import org.tartarus.snowball.ext.englishStemmer;
 public class PreProcessing {
 
 	private ArrayList<String> stopWords;
-	private final int MIN_TF = 3;
+	//private final int MIN_TF = 3;
 	
 	
 	public PreProcessing(){
@@ -55,12 +55,12 @@ public class PreProcessing {
 		}
 		
 		// Remove less frequent terms in document
-		Iterator<Map.Entry<String,Integer>> it = documentTerms.entrySet().iterator();
+		/*Iterator<Map.Entry<String,Integer>> it = documentTerms.entrySet().iterator();
 		while(it.hasNext()){
 			Map.Entry<String, Integer> pair = it.next();
 			if(pair.getValue() < MIN_TF)
 				it.remove();
-		}
+		}*/
 		
 		
 		document.setContent(null); // clear variable to save memory

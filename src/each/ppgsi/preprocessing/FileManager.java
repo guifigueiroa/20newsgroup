@@ -1,4 +1,4 @@
-package each.ppgsi.nlp;
+package each.ppgsi.preprocessing;
 
 import java.io.BufferedReader;
 import java.io.File;
