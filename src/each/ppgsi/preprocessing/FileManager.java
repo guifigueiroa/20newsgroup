@@ -37,7 +37,11 @@ public class FileManager {
 
 	public Document getDocumentContent(File file){
 		Document document = new Document();
-		document.setNewsGroup(file.getPath().split("/")[2]);
+		if(file.getPath().contains("/")){
+			document.setNewsGroup(file.getPath().split("/")[2]);
+		} else {
+			document.setNewsGroup(file.getPath().split("\\\\")[2]);
+		}
 		
 		try {
 			FileInputStream fis = new FileInputStream(file);

@@ -13,7 +13,8 @@ public class DocumentList {
 	private ArrayList<Document> documentList;
 	private HashMap<String, Integer> corpusTermCount;
 	private SortedSet<String> termsSet;
-	private static final int MIN_DF = 3;
+	private static final int MIN_DF = 15;
+	private static final int MAX_DF = 1000;
 	
 	public static DocumentList getInstance(){
 		if(instance == null) {
@@ -81,15 +82,20 @@ public class DocumentList {
 		
 		corpusTermCount = new HashMap<String, Integer>();
 		Iterator<String> it = getTerms().iterator();
+		//int maxDF = 0;
+		//int avgDF = 0;
 		while(it.hasNext()){
 			String term = it.next();
 			int DF = countDocumentsWithTerm(term);
-			if(DF > MIN_DF) {
+			if(DF > MIN_DF && DF < MAX_DF) {
 				corpusTermCount.put(term, DF);
 			} else {
 				it.remove(); // Remove less frequent words
 			}
+			//if(DF > maxDF) maxDF = DF;
+			//avgDF += DF;
 		}
+		//System.out.println("MAX_DF: " + maxDF + " AVG_DF:" + (avgDF/corpusTermCount.size()));
 		System.out.println("Terms being used: " + corpusTermCount.size());
 	}
 }

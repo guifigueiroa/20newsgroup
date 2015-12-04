@@ -63,4 +63,16 @@ public class Document {
 		}
 		return binary.toString();
 	}
+	
+	public String getNumberNewsGroup(){
+		int newsGroupNumber = 1;
+		Iterator<String> it = newsGroupSet.iterator();
+		while(it.hasNext()){
+			if(it.next().equals(newsGroup))
+				break;
+			else
+				newsGroupNumber++;
+		}
+		return Integer.toString(newsGroupNumber);
+	}
 }
